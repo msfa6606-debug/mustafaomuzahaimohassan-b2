@@ -1,0 +1,57 @@
+import random
+import string
+import time
+
+# البيانات
+names = ["Ali", "Mustafa"]
+years = ["1990"]
+football = ["Messi"]
+cars = ["Nissan"]
+cats = ["Siri"]
+sons = ["Ahmed"]
+
+# رموز خاصة
+special_chars = ["@", "#", "_", "!", "$"]
+
+# دالة تحويل لحروف كبيرة وصغيرة
+def mix_case(text):
+    return ''.join(random.choice([c.upper(), c.lower()]) for c in text)
+
+# توليد باسورد واحد
+def generate_password():
+    pattern = random.randint(1, 6)
+
+    if pattern == 1:
+        return random.choice(names) + random.choice(years)
+
+    elif pattern == 2:
+        return random.choice(football) + random.choice(special_chars) + random.choice(years)
+
+    elif pattern == 3:
+        return random.choice(cars) + "_" + random.choice(sons)
+
+    elif pattern == 4:
+        return random.choice(cats) + str(random.randint(0, 9999)) + "!"
+
+    elif pattern == 5:
+        return mix_case(random.choice(names)) + str(random.randint(0, 9999))
+
+    elif pattern == 6:
+        return mix_case(random.choice(football)) + random.choice(special_chars) + str(random.randint(0, 9999))
+
+# البداية
+start_time = time.time()
+
+passwords = set()
+
+# توليد 100000 بدون تكرار
+while len(passwords) < 100000:
+    passwords.add(generate_password())
+
+# حفظ بالملف
+with open("passwords.txt", "w") as f:
+    for p in passwords:
+        f.write(p + "\n")
+
+# الوقت
+end_time = time.time()
